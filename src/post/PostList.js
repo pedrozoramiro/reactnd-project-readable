@@ -1,5 +1,7 @@
 import React, { Component }  from 'react';
-import PostItem from './PostItem'
+import { connect } from 'react-redux'
+
+import PostItem from './detail/PostItem'
 
 class PostList extends Component {
 
@@ -13,4 +15,11 @@ class PostList extends Component {
         );
     }
 }
-export default PostList;
+
+
+function mapStateToProps ({postsReducer}) {
+   const {posts} = postsReducer;
+   return {posts}
+}
+  
+ export default connect(mapStateToProps)(PostList)

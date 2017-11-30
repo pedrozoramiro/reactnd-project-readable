@@ -1,6 +1,5 @@
 import React, { Component }  from 'react';
 import { Link } from "react-router-dom";
-import CommentList from './comment/CommentList'
 
 class PostItem extends Component {
 
