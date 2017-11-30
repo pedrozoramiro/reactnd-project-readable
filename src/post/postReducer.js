@@ -24,6 +24,7 @@ export function postsReducer(state = initialState, action) {
       
 }
 
+
 /*id	     String	Identificador único
 timestamp	 Integer	Data de criação - dados default rastreiam isto em Unix time. Você pode usar Date.now() para obter este número
 title	     String	Título do post
