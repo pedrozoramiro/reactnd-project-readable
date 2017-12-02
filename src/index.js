@@ -1,21 +1,13 @@
-import "./index.css";
-
 import React from "react";
-import { createStore} from 'redux'
 import { Provider } from 'react-redux'
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
-import App from "./App";
-import reducer from './commons/ReducerRegister'
+import App from './commons/App';
 import registerServiceWorker from './registerServiceWorker';
+import configureStore from './store/configureStore';
 
-
-const store = createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)
-
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>

@@ -1,6 +1,7 @@
 import {
   ADD_POST,
   REMOVE_POST,
+  REFRESH_POSTS,
 } from './postAction'
 
 const initialState = {
@@ -14,10 +15,17 @@ export function postsReducer(state = initialState, action) {
       posts.push(action.post);
       return state;
     }
+    
     case REMOVE_POST:{
       const {posts} = state;
       return {...state, posts:posts.filter(p => p.id !== action.post.id)}
     }
+
+    case REFRESH_POSTS:{
+      const {posts} = action;
+      return {...state, posts:posts}
+    }
+
     default:
       return state;
   }

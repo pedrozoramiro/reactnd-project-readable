@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from "react-router-dom";
-import logo from './logo.svg';
-import './App.css';
-import PostList from './post/PostList'
-import PostDetails from './post/detail/PostDetails'
+import PostList from '../post/PostList'
+import PostDetails from '../post/detail/PostDetails'
 
 class App extends Component {
   
