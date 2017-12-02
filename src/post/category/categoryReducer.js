@@ -1,30 +1,16 @@
 import {
-  ADD_POST,
-  REMOVE_POST,
-  REFRESH_POSTS,
-} from './postAction'
+  REFRESH_CATEGORY
+} from './categoryAction'
 
 const initialState = {
-  posts:[]
+  categories:[]
 }
 
-export function posts(state = initialState, action) {
- 
+export function categories(state = initialState, action) {
   switch (action.type) {
-    case ADD_POST:{
-      const {posts} = state;
-      posts.push(action.post);
-      return state;
-    }
-
-    case REMOVE_POST:{
-      const {posts} = state;
-      return {...state, posts:posts.filter(p => p.id !== action.post.id)}
-    }
-
-    case REFRESH_POSTS:{
-      const {posts} = action;
-      return {...state, posts:posts}
+     case REFRESH_CATEGORY:{
+      const {categories} = action;
+      return {...state, categories}
     }
 
     default:

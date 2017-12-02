@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import { postsReducer } from '../post/postReducer';
+import { posts } from '../post/postReducer';
+import { categories } from '../post/category/categoryReducer';
 
 export default combineReducers({
-  postsReducer
+  posts,
+  categories
 })
