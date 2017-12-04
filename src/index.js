@@ -6,13 +6,16 @@ import { BrowserRouter } from "react-router-dom";
 import App from './commons/App';
 import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store/configureStore';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <MuiThemeProvider>
+        <App />
+      </MuiThemeProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")

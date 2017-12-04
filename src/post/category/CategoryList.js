@@ -1,7 +1,6 @@
 import React, { Component }  from 'react';
-import PropTypes from "prop-types";
 
-import { Link } from "react-router-dom";
+import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux'
 import {fetchAllCategories} from './categoryAction'
 
@@ -15,9 +14,9 @@ class CategoryList extends Component {
         const {categories,handleToCategory} = this.props;
         return (
             <div>
-                <button onClick={()=>handleToCategory()}>Todos</button>
+                <RaisedButton  onClick={()=>handleToCategory()}>Todos</RaisedButton>
                 {categories.map((category,key)=>(
-                     <button key={key} onClick={()=>handleToCategory(category.path)}>{category.name}</button>)
+                     <RaisedButton  key={key} onClick={()=>handleToCategory(category.path)}>{category.name}</RaisedButton>)
                 )} 
             </div>
         );

@@ -2,15 +2,20 @@ import {
   ADD_POST,
   REMOVE_POST,
   REFRESH_POSTS,
+  SORT_POST,
+  REFRESH_POST,
+  REFRESH_POST_COMMENT
 } from './postAction'
 
 const initialState = {
-  posts:[]
+  posts:[],
+  postDetailId:''
 }
 
 export function posts(state = initialState, action) {
  
   switch (action.type) {
+    
     case ADD_POST:{
       const {posts} = state;
       posts.push(action.post);
@@ -25,6 +30,23 @@ export function posts(state = initialState, action) {
     case REFRESH_POSTS:{
       const {posts} = action;
       return {...state, posts:posts}
+    }
+
+    case SORT_POST:{
+      const {posts} = state;
+      const {sortProperty} = action;
+      return {...state, posts: posts.sort((a, b) => b[sortProperty] - a[sortProperty])}
+    }
+
+    case REFRESH_POST:{
+      const {posts} = state;
+      const {postIndex,post} = action;
+      return {...state,
+              posts :[...posts.slice(0, postIndex),
+                      post,
+                      ...posts.slice(postIndex + 1)
+                     ]
+             }
     }
 
     default:
