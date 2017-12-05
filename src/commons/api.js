@@ -1,6 +1,6 @@
 
 export function postData(url,data,action){
-    return fetchBase(url,data,action,'POST');
+    return fetchBase(url,action,'POST',data);
 }
 
 export function deleteData(url,action){
@@ -18,15 +18,17 @@ export function putData(url,data, action) {
 function buildUrl(path){
     return `http://localhost:3001${path}`;
 }
-
+function buildHeader(){
+    return { 'Authorization': 'abacate',
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+    };
+}
 function fetchBase(url,action,method, data){
+    
     return (dispatch) => {
         fetch(buildUrl(url),
-        { headers: 
-            { 'Authorization': 'abacate',
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-            },
+        {   headers:buildHeader(),
             method: method,
             body: data ? JSON.stringify(data) : null
         })

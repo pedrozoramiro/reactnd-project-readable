@@ -1,5 +1,6 @@
 import {
-  REFRESH_COMMENTS
+  REFRESH_COMMENTS,
+  REFRESH_COMMENT
 } from './commentAction'
 
 const initialState = {
@@ -11,11 +12,20 @@ export function commentReducer(state = initialState, action) {
   switch (action.type) {
     
     case REFRESH_COMMENTS:{
-      debugger;
       const {comments} = action;
       return {...state, comments}
     }
 
+    case REFRESH_COMMENT:{
+      const {comments} = state;
+      const {commentIndex,comment} = action;
+      return {...state,
+                comments :[...comments.slice(0, commentIndex),
+                comment,
+                      ...comments.slice(commentIndex + 1)
+                     ]
+             }
+    }
     default:
       return state;
   }

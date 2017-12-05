@@ -56,7 +56,11 @@ class PostList extends Component {
                 <h2>{this.props.match.params.category || 'Todos'}</h2>
                 <CategoryList handleToCategory={this.loadPosts} />
                 {posts.map((post,index)=>(
-                    <PostItem key={index} postIndex={index} post={post} handleUpdateVoteScore={updateVoteScore} handleRemove={removePost} />)
+                    <PostItem key={index} 
+                              postIndex={index} 
+                              post={post} 
+                              handleUpdateVoteScore={updateVoteScore} 
+                              handleRemove={removePost} />)
                 )} 
 
                 

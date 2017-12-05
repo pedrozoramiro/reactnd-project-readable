@@ -36,7 +36,9 @@ export function refreshPosts(data) {
 }
 
 function refreshPostUpdate(postIndex) {
+  
   return function (post) {
+    
     return {
       type: REFRESH_POST,
       postIndex,
