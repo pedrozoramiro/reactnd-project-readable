@@ -26,7 +26,8 @@ export function deletePost(post) {
   }
 }
 
-export function refreshAllPosts(posts) {
+export function refreshAllPosts(data) {
+  const posts = Array.isArray(data) ? data: [data];
   return {
     type: REFRESH_POSTS,
     posts
@@ -46,6 +47,12 @@ function refreshPostUpdate(postIndex) {
 export function updateVoteScore(post,postIndex,voteScoreCmd){  
   return postData(`http://localhost:3001/posts/${post.id}`,{option:voteScoreCmd}, refreshPostUpdate(postIndex));
 }
+
+
+export function getPost(postId){
+  return fetchData(`http://localhost:3001/posts/${postId}`,refreshAllPosts);
+}
+
 
 export function fetchAllPosts (){
   return fetchData("http://localhost:3001/posts",refreshAllPosts);

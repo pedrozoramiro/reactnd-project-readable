@@ -4,30 +4,42 @@ import { Link } from "react-router-dom";
 import CommentList from '../comment/CommentList'
 import TextField from 'material-ui/TextField';
 
+import {
+    getPost,
+} from '../postAction'
 
-class PostDetails extends Component {
 
+class PostDetails extends Component {    
     componentDidMount = () => {
-        const {match} =this.props;
-        // this.props.getPost(match.params.post_id);
+        const {post, match} =this.props;
+        if(!post){
+            this.props.getPost(match.params.post_id);
+        }
     };
 
     render() {
         const {post} = this.props ;
         return (
             <div>
-               <TextField defaultValue={post ? post.title :""} />
-                <Link to="/">close</Link>
-                
+                <Link to="/">X</Link>
+                {post ? post.title :""}
                 <CommentList/>
             </div>
         );
     }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps (state,ownProps) {
+    const {match} = ownProps;
     const {posts} = state;
-    return {...posts};
+    const post = posts.posts.find(p=>p.id === match.params.post_id);
+    return {post};
 }
-  
- export default connect(mapStateToProps)(PostDetails)
+
+function mapDispatchToProps (dispatch) {
+    return {
+        getPost: (post_id) => dispatch(getPost(post_id))        
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(PostDetails)
