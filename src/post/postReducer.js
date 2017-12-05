@@ -3,8 +3,7 @@ import {
   REMOVE_POST,
   REFRESH_POSTS,
   SORT_POST,
-  REFRESH_POST,
-  REFRESH_POST_COMMENT
+  REFRESH_POST
 } from './postAction'
 
 const initialState = {

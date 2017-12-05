@@ -2,7 +2,6 @@ import React, { Component }  from 'react';
 import { connect } from 'react-redux'
 import { Link } from "react-router-dom";
 import CommentList from '../comment/CommentList'
-import TextField from 'material-ui/TextField';
 
 import {
     getPost,
@@ -18,12 +17,12 @@ class PostDetails extends Component {
     };
 
     render() {
-        const {post} = this.props ;
+        const post = this.props.post ;
         return (
             <div>
                 <Link to="/">X</Link>
                 {post ? post.title :""}
-                <CommentList/>
+                {post ? <CommentList postId={post.id}/>: " loading "}
             </div>
         );
     }

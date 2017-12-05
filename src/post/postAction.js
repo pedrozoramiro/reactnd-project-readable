@@ -1,3 +1,4 @@
+import {getData,postData,deleteData} from '../commons/api'
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const REFRESH_POSTS = 'REFRESH_POSTS'
@@ -26,7 +27,7 @@ export function deletePost(post) {
   }
 }
 
-export function refreshAllPosts(data) {
+export function refreshPosts(data) {
   const posts = Array.isArray(data) ? data: [data];
   return {
     type: REFRESH_POSTS,
@@ -45,54 +46,21 @@ function refreshPostUpdate(postIndex) {
 }
 
 export function updateVoteScore(post,postIndex,voteScoreCmd){  
-  return postData(`http://localhost:3001/posts/${post.id}`,{option:voteScoreCmd}, refreshPostUpdate(postIndex));
+  return postData(`/posts/${post.id}`,{option:voteScoreCmd}, refreshPostUpdate(postIndex));
 }
-
 
 export function getPost(postId){
-  return fetchData(`http://localhost:3001/posts/${postId}`,refreshAllPosts);
+  return getData(`/posts/${postId}`,refreshPosts);
 }
 
-
 export function fetchAllPosts (){
-  return fetchData("http://localhost:3001/posts",refreshAllPosts);
+  return getData("/posts",refreshPosts);
 }
 
 export function fetchAllByCategory (category){
-  return fetchData(`http://localhost:3001/${category}/posts`,refreshAllPosts);
+  return getData(`/${category}/posts`,refreshPosts);
 }
 
 export function removePost (post){
-  return deleteData(`http://localhost:3001/posts/${post.id}`,deletePost(post));
-}
-
-export function postData(url,data,action){
-  return (dispatch) => {
-    fetch(url,
-      { headers: { 'Authorization': 'whatever-you-want',
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                  },
-         method: 'post', 
-         body: JSON.stringify(data)
-      }
-    )
-    .then((res) => res.json())
-    .then(data=>dispatch(action(data)))
-  };
-}
-
-export function deleteData(url,action){
-  return (dispatch) => {
-    fetch(url,{ headers: { 'Authorization': 'whatever-you-want'},method: 'delete'})
-    .then((res) => res.json())
-    .then(data=>dispatch(action))
-};
-}
-export function fetchData(url, success) {
-  return (dispatch) => {
-      fetch(url,{ headers: { 'Authorization': 'whatever-you-want' }})
-      .then((res) => res.json())
-      .then(data=>dispatch(success(data)))
-  };
+  return deleteData(`/posts/${post.id}`,deletePost(post));
 }
