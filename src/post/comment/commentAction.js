@@ -64,7 +64,7 @@ export function saveComment(body,parentId){
 
 
 export function updateBodyComment(body,commentId,commentIndex){
-  debugger;
+  
   const commentUpdate = {
     timestamp:Date.now(),
     body

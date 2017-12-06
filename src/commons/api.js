@@ -1,4 +1,4 @@
-import { debug } from "util";
+
 
 
 export function postData(url,data,action){
@@ -27,7 +27,7 @@ function buildHeader(){
     };
 }
 function fetchBase(url,action,method, data){
-    debugger;
+    
     return (dispatch) => {
         fetch(buildUrl(url),
         {   headers:buildHeader(),
@@ -36,7 +36,7 @@ function fetchBase(url,action,method, data){
         })
         .then((res) => res.json())
         .then(data=>{
-            debugger;
-            dispatch(action(data))})
+            dispatch(action(data))
+        })
     };
 }
