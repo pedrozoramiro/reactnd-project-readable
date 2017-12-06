@@ -1,30 +1,68 @@
-import {getData,postData} from '../../commons/api'
+import {getData,postData,deleteData} from '../../commons/api'
+import UUIDV1 from 'uuid/v1'
 
-export const REFRESH_COMMENTS = 'REFRESH_COMMENTS'
-export const REFRESH_COMMENT = 'REFRESH_COMMENT'
+export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const LOAD_COMMENTS = 'LOAD_COMMENTS'
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 
-export function refreshComments(data) {
+export function loadComments(data) {
   const comments = Array.isArray(data) ? data: [data];
   return {
-    type: REFRESH_COMMENTS,
+    type: LOAD_COMMENTS,
     comments
   }
 }
 
-function refreshComment(commentIndex) {
+function updateComment(commentIndex) {
   return function (comment) {
     return {
-      type: REFRESH_COMMENT,
+      type: UPDATE_COMMENT,
       commentIndex,
       comment
     }
   }
 }
 
+function removeComment(commentIndex,commentId) {
+  return function () {
+    return {
+      type: REMOVE_COMMENT,
+      commentIndex
+    }
+  }
+}
+
+function addComment(comment) {
+   return {
+      type: ADD_COMMENT,
+      comment
+  }
+}
+
+
+
 export function getAllComments(postId){
-  return getData(`/posts/${postId}/comments`,refreshComments);
+  return getData(`/posts/${postId}/comments`,loadComments);
+}
+
+export function deleteComment(commentIndex,commentId){
+  return deleteData(`/comments/${commentId}`,removeComment(commentIndex));
+}
+
+
+
+export function saveComment(body,parentId){
+  const comment = {
+    id: UUIDV1(),
+    body,
+    timestamp : Date.now.timestamp,
+    author : "USER LOGGED NAME",
+    parentId
+  };
+  return postData(`/comments`,comment,addComment);
 }
 
 export function updateVoteScore(comments,commentIndex,voteScoreCmd){  
-  return postData(`/comments/${comments.id}`,{option:voteScoreCmd}, refreshComment(commentIndex));
+  return postData(`/comments/${comments.id}`,{option:voteScoreCmd}, updateComment(commentIndex));
 }
