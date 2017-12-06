@@ -30,13 +30,13 @@ class PostList extends Component {
     } 
    
     loadPosts = (category) => {
-        const {history} =this.props;
+        const {history,fetchAllPosts,fetchAllByCategory} =this.props;
         if(category){
-            this.props.fetchAllByCategory(category);
+            fetchAllByCategory(category);
             history.push(`/${category}`)
             return;
         }
-        this.props.fetchAllPosts();
+        fetchAllPosts();
         history.push('/');
     }
 

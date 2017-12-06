@@ -1,6 +1,6 @@
     import React, { Component }  from 'react';
     import CommentDetails from './CommentDetails'
-    import {getAllComments,updateVoteScore,saveComment,deleteComment} from './commentAction'
+    import {getAllComments,updateVoteScore,saveComment,deleteComment,updateBodyComment} from './commentAction'
     import ActionDone from 'material-ui/svg-icons/action/done';
     import TextField from 'material-ui/TextField';
     import FlatButton  from "material-ui/FlatButton";
@@ -23,9 +23,15 @@
             this.setState({[name]: value});
         }
 
+        handleUpdateBodyComment = (body,commentId,commentIndex) => {
+            const {updateBodyComment} = this.props;
+            updateBodyComment(body,commentId,commentIndex);
+        }
+
         render() {
             const {newCommentBody} = this.state;
             const {comments,updateVoteScore,postId,saveComment,deleteComment} = this.props;
+            const handleUpdateBodyComment = this.handleUpdateBodyComment;
             return (
                 <div>
                   
@@ -42,6 +48,7 @@
                                                commentIndex={index} 
                                                comment={comment} 
                                                updateVoteScore={updateVoteScore}
+                                               updateBodyComment={handleUpdateBodyComment}
                                                deleteComment={deleteComment}/>
                     })}
                 </div>
@@ -56,6 +63,7 @@
             updateVoteScore: (comments,commentIndex,voteScoreCmd) => dispatch(updateVoteScore(comments,commentIndex,voteScoreCmd)),
             saveComment: (body,postId) => dispatch(saveComment(body,postId)),
             deleteComment: (body,postId) => dispatch(deleteComment(body,postId)),
+            updateBodyComment:(body,commentId,commentIndex) => dispatch(updateBodyComment(body,commentId,commentIndex)),
             
         }
     }

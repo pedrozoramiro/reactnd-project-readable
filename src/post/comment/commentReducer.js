@@ -29,6 +29,7 @@ export function commentReducer(state = initialState, action) {
       const newComments = comments.map((oldComment, index)=> commentIndex == index ? comment:oldComment);
       return {...state, comments :newComments }
     }
+    
     case REMOVE_COMMENT:{
       const {comments} = state;
       const {commentIndex} = action;
