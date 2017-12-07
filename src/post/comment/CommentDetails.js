@@ -8,7 +8,6 @@ import ActionEdit from 'material-ui/svg-icons/action/description';
 import ActionDone from 'material-ui/svg-icons/action/done';
 import ActionCancel from 'material-ui/svg-icons/action/flip-to-back';
 import TextField  from 'material-ui/TextField';
-import { debug } from 'util';
 
 class CommentDetails extends Component {
 

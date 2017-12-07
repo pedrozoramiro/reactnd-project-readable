@@ -4,8 +4,10 @@ import { connect } from 'react-redux'
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import PostItem from './detail/PostItem'
-
+import PostEditDialog from './detail/PostEditDialog'
 import CategoryList from './category/CategoryList'
+
+import ActionAdd from 'material-ui/svg-icons/action/add-shopping-cart';
 import {
     fetchAllPosts,
     removePost,
@@ -13,10 +15,11 @@ import {
     sortPosts,
     updateVoteScore
 } from './postAction'
+import FlatButton  from 'material-ui/FlatButton';
 
 class PostList extends Component {
     
-    state= {sortProperty : 'voteScore'}
+    state= {openPostEditDialog : false,sortProperty : 'voteScore'}
 
      componentDidMount = () => {
         const {match} =this.props;
@@ -39,11 +42,28 @@ class PostList extends Component {
         fetchAllPosts();
         history.push('/');
     }
+    handleOpenPostEditDialog = () =>{
+        this.setState({ openPostEditDialog : true})
+    }
+
+
+    handleCloseModal= () =>{
+        this.setState({ openPostEditDialog : false})
+    }
+
+    handleSubmitEditPost = (event) =>{
+        debugger;
+        event.preventDefault();
+        console.log(event.target)
+        this.setState({ openPostEditDialog : false});
+    }
 
     render() {
+        const {openPostEditDialog} = this.state;
         const {posts,removePost,updateVoteScore} = this.props;
         return (
             <div>    
+                <FlatButton icon={<ActionAdd  />} onClick={this.handleOpenPostEditDialog} />
                 <SelectField
                     floatingLabelText="Ordenação"
                     value={this.state.sortProperty}
@@ -63,7 +83,11 @@ class PostList extends Component {
                               handleRemove={removePost} />)
                 )} 
 
-                
+                <PostEditDialog 
+                    open={openPostEditDialog} 
+                    handleCloseModal={this.handleCloseModal} 
+                    handleSubmit={this.handleSubmitEditPost}
+                    />
             </div>/* título, autor, número de comentários, pontuação atual e um mecanismo de votos */
         );
     }

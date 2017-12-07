@@ -1,6 +1,5 @@
 import {getData,postData,deleteData,putData} from '../../commons/api'
 import UUIDV1 from 'uuid/v1'
-import { debug } from 'util';
 
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
