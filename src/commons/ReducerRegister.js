@@ -9,5 +9,5 @@ export default combineReducers({
   posts,
   categories,
   commentReducer,
-  formReducer
+  form:formReducer
 })

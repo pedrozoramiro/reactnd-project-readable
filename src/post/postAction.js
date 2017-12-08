@@ -1,3 +1,5 @@
+import UUIDV1 from 'uuid/v1'
+
 import {getData,postData,deleteData} from '../commons/api'
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
@@ -51,6 +53,12 @@ export function updateVoteScore(post,postIndex,voteScoreCmd){
   return postData(`/posts/${post.id}`,{option:voteScoreCmd}, refreshPostUpdate(postIndex));
 }
 
+export function savePost(post){  
+  post.id = UUIDV1();
+  post.timestamp = Date.now();
+  return postData(`/posts`,post, addPost);
+}
+
 export function getPost(postId){
   return getData(`/posts/${postId}`,refreshPosts);
 }
@@ -64,5 +72,5 @@ export function fetchAllByCategory (category){
 }
 
 export function removePost (post){
-  return deleteData(`/posts/${post.id}`,deletePost(post));
+  return deleteData(`/posts/${post.id}`,deletePost);
 }

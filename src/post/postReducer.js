@@ -16,9 +16,9 @@ export function posts(state = initialState, action) {
   switch (action.type) {
     
     case ADD_POST:{
+      const {post} = action;
       const {posts} = state;
-      posts.push(action.post);
-      return state;
+      return {...state, posts:posts.concat([post])}
     }
 
     case REMOVE_POST:{
