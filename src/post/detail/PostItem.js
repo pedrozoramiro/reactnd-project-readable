@@ -7,6 +7,8 @@ import FlatButton from 'material-ui/FlatButton';
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up';
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
 
+import  RaisedButton  from 'material-ui/RaisedButton';
+
 class PostItem extends Component {
 /* título, autor, número de comentários, pontuação atual e um mecanismo de votos */
 
@@ -19,10 +21,10 @@ class PostItem extends Component {
               subtitle={`Score: ${post.voteScore}  Commentários: ${post.commentCount}  Autor: ${post.author} `}
             />
             <CardActions>
-              <FlatButton icon={<ActionThumbUp  />}  onClick={()=>handleUpdateVoteScore(post,postIndex,'upVote')} />
-              <FlatButton icon={<ActionThumbDown  />} onClick={()=>handleUpdateVoteScore(post,postIndex,'downVote')} />
-              <FlatButton label="REMOVER"  onClick={()=>handleRemove(post)} />
-              <FlatButton label="DETALHES" containerElement={ <Link to={`/${post.category}/${post.id}`}/>} />
+              <RaisedButton icon={<ActionThumbUp  />}  onClick={()=>handleUpdateVoteScore(post,postIndex,'upVote')} />
+              <RaisedButton icon={<ActionThumbDown  />} onClick={()=>handleUpdateVoteScore(post,postIndex,'downVote')} />
+              <RaisedButton label="REMOVER"  onClick={()=>handleRemove(post)} />
+              <RaisedButton label="DETALHES" containerElement={ <Link to={`/${post.category}/${post.id}`}/>} />
             </CardActions>
           </Card>
         );
