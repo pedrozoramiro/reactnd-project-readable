@@ -7,6 +7,11 @@ import FlatButton from 'material-ui/FlatButton';
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up';
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
 
+import ActionEdit from 'material-ui/svg-icons/editor/mode-edit';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
+
+import ActionDetails from 'material-ui/svg-icons/action/visibility';
+
 import  RaisedButton  from 'material-ui/RaisedButton';
 
 class PostItem extends Component {
@@ -23,9 +28,9 @@ class PostItem extends Component {
             <CardActions>
               <RaisedButton icon={<ActionThumbUp  />}  onClick={()=>handleUpdateVoteScore(post,postIndex,'upVote')} />
               <RaisedButton icon={<ActionThumbDown  />} onClick={()=>handleUpdateVoteScore(post,postIndex,'downVote')} />
-              <RaisedButton label="REMOVER"  onClick={()=>handleRemove(post)} />
-              <RaisedButton label="DETALHES" containerElement={ <Link to={`/${post.category}/${post.id}`}/>} />
-              <RaisedButton label="EDITAR" onClick={()=>handleUpdatePost(post)} />
+              <RaisedButton icon={<ActionDetails  />}  containerElement={ <Link to={`/${post.category}/${post.id}`}/>} />
+              <RaisedButton icon={<ActionEdit  />} onClick={()=>handleUpdatePost(post)} />
+              <RaisedButton icon={<ActionDelete  />}  onClick={()=>handleRemove(post)} />
             </CardActions>
           </Card>
         );

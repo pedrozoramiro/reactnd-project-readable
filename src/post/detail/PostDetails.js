@@ -1,44 +1,74 @@
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
+import PropTypes from "prop-types";
 import { connect } from 'react-redux'
+
 import { Link } from "react-router-dom";
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import { Card, CardActions, CardHeader, CardText, CardTitle } from 'material-ui/Card';
+
+
 import CommentList from '../comment/CommentList'
+import If from '../../commons/If'
 
 import {
     getPost,
 } from '../postAction'
 
 
-class PostDetails extends Component {    
+class PostDetails extends Component {
     componentDidMount = () => {
-        const {post, match} =this.props;
-        if(!post){
+        const { post, match } = this.props;
+        if (!post.id) {
             this.props.getPost(match.params.post_id);
         }
     };
 
     render() {
-        const post = this.props.post ;
+        const { post } = this.props;
         return (
             <div>
-                <Link to="/">X</Link>
-                {post ? post.title :""}
-                {post ? <CommentList postId={post.id}/>: " loading "}
+                <AppBar
+                    iconElementLeft={<IconButton containerElement={<Link to="/" />}><NavigationClose /></IconButton>}
+                    title={<span>Detalhes do post </span>}
+                />
+                <Card>
+                    <CardTitle title={post.title} 
+                    subtitle={`Score: ${post.voteScore}  
+                              Commentários: ${post.commentCount}  
+                              Autor: ${post.author}
+                              Data: ${new Date(post.timestamp).toLocaleDateString()} `} />
+                    <CardText >{post.body}</CardText>
+                    <CardText>
+                        <CommentList postId={post.id} />
+                    </CardText>
+                </Card>
             </div>
         );
     }
 }
 
-function mapStateToProps (state,ownProps) {
-    const {match} = ownProps;
-    const {posts} = state;
-    const post = posts.posts.find(p=>p.id === match.params.post_id);
-    return {post};
+function mapStateToProps(state, ownProps) {
+    const { match } = ownProps;
+    const { posts } = state;
+    const post = posts.posts.find(p => p.id === match.params.post_id);
+    return { post };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
     return {
-        getPost: (post_id) => dispatch(getPost(post_id))        
+        getPost: (post_id) => dispatch(getPost(post_id))
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(PostDetails)
+
+PostDetails.defaultProps = {
+    post: {}
+};
+
+PostDetails.propTypes = {
+    post: PropTypes.object
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetails)

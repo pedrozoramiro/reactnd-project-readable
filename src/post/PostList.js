@@ -3,18 +3,19 @@ import { connect } from 'react-redux'
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import PostItem from './detail/PostItem'
-import PostEditDialog from './detail/PostEditDialog'
-import CategoryList from './category/CategoryList'
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
-import ActionAdd from 'material-ui/svg-icons/action/add-shopping-cart';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import ActionAdd from 'material-ui/svg-icons/action/note-add';
+
+import PostItem from './detail/PostItem'
+import PostEditDialog from './detail/PostEditDialog'
+import CategoryList from './category/CategoryList'
 import {
     fetchAllPosts,
     removePost,
@@ -23,10 +24,11 @@ import {
     updateVoteScore,
     savePost
 } from './postAction'
+import { RaisedButton } from 'material-ui';
 
 class PostList extends Component {
 
-    state = { openPostEditDialog: false, postEditIndex:null, sortProperty: 'voteScore' }
+    state = { openPostEditDialog: false, postEditIndex: null, sortProperty: 'voteScore' }
 
     componentDidMount = () => {
         const { match } = this.props;
@@ -49,19 +51,19 @@ class PostList extends Component {
         history.push('/');
     }
 
-    handleOpenModal = (openPostEditDialog,postEditIndex) => {
-        this.setState({openPostEditDialog,postEditIndex})
+    handleOpenModal = (openPostEditDialog, postEditIndex) => {
+        this.setState({ openPostEditDialog, postEditIndex })
     }
 
     handleSubmit = (post) => {
-        const {postEditIndex} = this.state;
-        this.props.savePost(post,postEditIndex);
+        const { postEditIndex } = this.state;
+        this.props.savePost(post, postEditIndex);
         this.setState({ openPostEditDialog: false });
     }
 
     render() {
-        const { openPostEditDialog,postEditIndex } = this.state;
-        const { posts, removePost, updateVoteScore,updatePost } = this.props;
+        const { openPostEditDialog, postEditIndex } = this.state;
+        const { posts, removePost, updateVoteScore, updatePost } = this.props;
         const postEdit = posts[postEditIndex];
         return (
             <div>
@@ -83,7 +85,7 @@ class PostList extends Component {
                             <MenuItem value='timestamp' primaryText="Data" />
                         </SelectField>
                         <ToolbarSeparator />
-                        <FlatButton onClick={()=>this.handleOpenModal(true)} primary label="Novo Post" />
+                        <RaisedButton onClick={() => this.handleOpenModal(true)} primary icon={<ActionAdd />} />
                     </ToolbarGroup>
                 </Toolbar>
                 <GridList
@@ -94,14 +96,14 @@ class PostList extends Component {
                             postIndex={index}
                             post={post}
                             handleUpdateVoteScore={updateVoteScore}
-                            handleRemove={removePost} 
-                            handleUpdatePost={()=>this.handleOpenModal(true,index)}
-                            />)
+                            handleRemove={removePost}
+                            handleUpdatePost={() => this.handleOpenModal(true, index)}
+                        />)
                     )}
                 </GridList>
                 <PostEditDialog
                     open={openPostEditDialog}
-                    handleCloseModal={()=>this.handleOpenModal(false)}
+                    handleCloseModal={() => this.handleOpenModal(false)}
                     onSubmit={this.handleSubmit}
                     postEdit={postEdit}
                 />
@@ -112,7 +114,7 @@ class PostList extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        savePost: (data,postIndex) => dispatch(savePost(data,postIndex)),
+        savePost: (data, postIndex) => dispatch(savePost(data, postIndex)),
         fetchAllPosts: (data) => dispatch(fetchAllPosts(data)),
         fetchAllByCategory: (data) => dispatch(fetchAllByCategory(data)),
         removePost: (data) => dispatch(removePost(data)),
