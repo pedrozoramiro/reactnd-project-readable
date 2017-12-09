@@ -26,13 +26,12 @@ import {
 
 class PostList extends Component {
 
-    state = { openPostEditDialog: false, sortProperty: 'voteScore' }
+    state = { openPostEditDialog: false, postEditIndex:null, sortProperty: 'voteScore' }
 
     componentDidMount = () => {
         const { match } = this.props;
         this.loadPosts(match.params.category);
     };
-
 
     handleSort = (event, index, sortProperty) => {
         this.setState({ sortProperty });
@@ -49,23 +48,21 @@ class PostList extends Component {
         fetchAllPosts();
         history.push('/');
     }
-    handleOpenPostEditDialog = () => {
-        this.setState({ openPostEditDialog: true })
+
+    handleOpenModal = (openPostEditDialog,postEditIndex) => {
+        this.setState({openPostEditDialog,postEditIndex})
     }
 
-
-    handleCloseModal = () => {
-        this.setState({ openPostEditDialog: false })
-    }
-
-    handleSubmitaaaa = post => {
-        this.props.savePost(post);
+    handleSubmit = (post) => {
+        const {postEditIndex} = this.state;
+        this.props.savePost(post,postEditIndex);
         this.setState({ openPostEditDialog: false });
     }
 
     render() {
-        const { openPostEditDialog } = this.state;
-        const { posts, removePost, updateVoteScore } = this.props;
+        const { openPostEditDialog,postEditIndex } = this.state;
+        const { posts, removePost, updateVoteScore,updatePost } = this.props;
+        const postEdit = posts[postEditIndex];
         return (
             <div>
                 <AppBar
@@ -86,7 +83,7 @@ class PostList extends Component {
                             <MenuItem value='timestamp' primaryText="Data" />
                         </SelectField>
                         <ToolbarSeparator />
-                        <FlatButton onClick={this.handleOpenPostEditDialog} primary label="Novo Post" />
+                        <FlatButton onClick={()=>this.handleOpenModal(true)} primary label="Novo Post" />
                     </ToolbarGroup>
                 </Toolbar>
                 <GridList
@@ -97,13 +94,16 @@ class PostList extends Component {
                             postIndex={index}
                             post={post}
                             handleUpdateVoteScore={updateVoteScore}
-                            handleRemove={removePost} />)
+                            handleRemove={removePost} 
+                            handleUpdatePost={()=>this.handleOpenModal(true,index)}
+                            />)
                     )}
                 </GridList>
                 <PostEditDialog
                     open={openPostEditDialog}
-                    handleCloseModal={this.handleCloseModal}
-                    onSubmit={this.handleSubmitaaaa}
+                    handleCloseModal={()=>this.handleOpenModal(false)}
+                    onSubmit={this.handleSubmit}
+                    postEdit={postEdit}
                 />
             </div>
         );
@@ -112,8 +112,7 @@ class PostList extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-
-        savePost: (data) => dispatch(savePost(data)),
+        savePost: (data,postIndex) => dispatch(savePost(data,postIndex)),
         fetchAllPosts: (data) => dispatch(fetchAllPosts(data)),
         fetchAllByCategory: (data) => dispatch(fetchAllByCategory(data)),
         removePost: (data) => dispatch(removePost(data)),

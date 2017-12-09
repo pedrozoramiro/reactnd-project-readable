@@ -13,7 +13,7 @@ class PostItem extends Component {
 /* título, autor, número de comentários, pontuação atual e um mecanismo de votos */
 
     render() {
-        const {handleRemove,handleUpdateVoteScore,postIndex,post} = this.props;
+        const {handleRemove,handleUpdatePost,handleUpdateVoteScore,postIndex,post} = this.props;
         return (
           <Card>
             <CardHeader
@@ -25,6 +25,7 @@ class PostItem extends Component {
               <RaisedButton icon={<ActionThumbDown  />} onClick={()=>handleUpdateVoteScore(post,postIndex,'downVote')} />
               <RaisedButton label="REMOVER"  onClick={()=>handleRemove(post)} />
               <RaisedButton label="DETALHES" containerElement={ <Link to={`/${post.category}/${post.id}`}/>} />
+              <RaisedButton label="EDITAR" onClick={()=>handleUpdatePost(post)} />
             </CardActions>
           </Card>
         );

@@ -19,8 +19,21 @@ class PostEditDialog extends Component {
         this.props.fetchAllCategories();
     }
 
+    componentWillReceiveProps(nextProps){
+        const { postEdit,initialize } = nextProps
+
+        if(!postEdit) return;
+        
+        if (!this.props.postEdit || this.props.postEdit.id !== postEdit.id) {
+          initialize(postEdit);
+        }
+    }
+
     render(){
         const {categories,handleSubmit,open,handleCloseModal,invalid,submitting,onSubmit} = this.props;
+
+        const {postEdit} = this.props;
+        console.log(postEdit);
         return (
             <Dialog title="Novo post"  modal={false} open={open}>
             <form onSubmit={handleSubmit}>

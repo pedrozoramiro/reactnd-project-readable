@@ -1,6 +1,6 @@
 import UUIDV1 from 'uuid/v1'
 
-import {getData,postData,deleteData} from '../commons/api'
+import {getData,postData,deleteData,putData} from '../commons/api'
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const REFRESH_POSTS = 'REFRESH_POSTS'
@@ -53,7 +53,10 @@ export function updateVoteScore(post,postIndex,voteScoreCmd){
   return postData(`/posts/${post.id}`,{option:voteScoreCmd}, refreshPostUpdate(postIndex));
 }
 
-export function savePost(post){  
+export function savePost(post,postIndex){ 
+  if(post.id){
+    return putData(`/posts/${post.id}`,post, refreshPostUpdate(postIndex));
+  }  
   post.id = UUIDV1();
   post.timestamp = Date.now();
   return postData(`/posts`,post, addPost);
