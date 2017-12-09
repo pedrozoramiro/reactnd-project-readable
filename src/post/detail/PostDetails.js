@@ -41,7 +41,9 @@ class PostDetails extends Component {
                               Data: ${new Date(post.timestamp).toLocaleDateString()} `} />
                     <CardText >{post.body}</CardText>
                     <CardText>
-                        <CommentList postId={post.id} />
+                        <If test={post.id}>
+                            <CommentList postId={post.id} />
+                        </If>
                     </CardText>
                 </Card>
             </div>
