@@ -31,12 +31,12 @@ function * getAllPosts(action) {
 
 function * getPost(action) {   
   const postId = action.payload;
-  yield * apiSaga(postService.getPost(postId),storeUpdatePost(0),null);
+  yield * apiSaga(postService.getPost(postId),storeUpdatePost(),null);
 }
 
 function * createPost(action) { 
   const {post} = action.payload;
-  yield * apiSaga(postService.createPost(post),storeUpdatePost(0),null);
+  yield * apiSaga(postService.createPost(post),storeUpdatePost(),null);
 }
 
 function * updatePost(action) { 

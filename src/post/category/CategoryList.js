@@ -22,8 +22,8 @@ class CategoryList extends Component {
 
   handleChange = (event, index, value) =>{
     const {handleToCategory} = this.props;
-    handleToCategory(value);
     this.setState({value});
+    handleToCategory(value);
   } 
 
 

@@ -11,30 +11,38 @@ const initialState = {
   postDetailId: ''
 }
 
-export function posts(state = initialState, action) {  
-  
+export function posts(state = initialState, action) {
+
   switch (action.type) {
     case STORE_ADD_POST: {
-      
-
       const post = action.payload;
       const { posts } = state;
       return { ...state, posts: posts.concat([post]) }
     }
 
     case STORE_REMOVE_POST: {
-      const  {post}  = action.payload;
+      const { post } = action.payload;
       const { posts } = state;
       return { ...state, posts: posts.filter(p => p.id !== post.id) }
     }
 
     case STORE_UPDATE_POSTS: {
-      const  posts  = action.payload;
+      const posts = action.payload;
       return { ...state, posts }
     }
+
     case STORE_UPDATE_POST: {
       const { posts } = state;
       const { postIndex, post } = action.payload;
+      if (!postIndex) {
+        return {
+          ...state,
+          posts: [...posts.slice(0, 0),
+            post,
+          ...posts.slice(0)
+          ]
+        }
+      }
       return {
         ...state,
         posts: [...posts.slice(0, postIndex),

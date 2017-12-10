@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import {reset,initialize} from 'redux-form';
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -34,11 +35,11 @@ class PostList extends Component {
     componentDidMount = () => {
         const { match } = this.props;
         this.loadPosts(match.params.category);
+        debugger;
     };
 
     handleSort = (event, index, sortProperty) => {
         this.setState({ sortProperty });
-        this.props.sortPosts(sortProperty);
     }
 
     loadPosts = (category) => {
@@ -53,7 +54,12 @@ class PostList extends Component {
     }
 
     handleOpenModal = (openPostEditDialog, postEditIndex) => {
-        this.setState({ openPostEditDialog, postEditIndex })
+        const {posts,initializePostEditForm} = this.props;
+        this.setState({ openPostEditDialog, postEditIndex });
+        if(openPostEditDialog){
+            const post = postEditIndex ? posts[postEditIndex]:{};
+            this.props.initializePostEditForm(post);
+        }
     }
 
     handleSubmit = (post) => {
@@ -120,6 +126,7 @@ class PostList extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
+        initializePostEditForm: (post) => dispatch(initialize('PostEditForm', post)),
         createPost: (post, postIndex) => dispatch(requestCreatePost({ post })),
         updatePost: (post, postIndex) => dispatch(requestUpdatePost({ post, postIndex })),
         getAllPosts: () => dispatch(requestAllPosts()),

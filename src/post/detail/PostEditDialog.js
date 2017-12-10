@@ -25,7 +25,6 @@ class PostEditDialog extends Component {
             initialize(postEdit);
             return;
         }
-        initialize({});
     }
 
     render() {
@@ -103,7 +102,7 @@ function mapStateToProps(state) {
     return { ...categories };
 }
 
-PostEditDialog = reduxForm({ form: 'PostEdit' })(PostEditDialog)
+PostEditDialog = reduxForm({ form: 'PostEditForm' })(PostEditDialog)
 PostEditDialog = connect(mapStateToProps, mapDispatchToProps)(PostEditDialog)
 export default PostEditDialog
 
