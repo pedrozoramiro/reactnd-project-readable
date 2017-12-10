@@ -32,13 +32,6 @@ export function posts(state = initialState, action) {
       const  posts  = action.payload;
       return { ...state, posts }
     }
-
-    case STORE_SORT_POST: {
-      const { posts } = state;
-      const { sortProperty } = action.payload;
-      return { ...state, posts: posts.sort((a, b) => b[sortProperty] - a[sortProperty]) }
-    }
-
     case STORE_UPDATE_POST: {
       const { posts } = state;
       const { postIndex, post } = action.payload;

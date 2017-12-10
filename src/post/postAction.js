@@ -3,7 +3,6 @@ import { createAction } from 'redux-actions';
 export const STORE_ADD_POST = 'STORE_ADD_POST'
 export const STORE_REMOVE_POST = 'STORE_REMOVE_POST'
 export const STORE_UPDATE_POSTS = 'STORE_UPDATE_POSTS'
-export const STORE_SORT_POST = 'STORE_SORT_POST'
 export const STORE_UPDATE_POST = 'STORE_UPDATE_POST'
 
 export const REQUEST_ALL_POST = 'REQUEST_ALL_POST'
@@ -30,4 +29,3 @@ export const storeUpdatePost = function (postIndex) {
 
 export const storeRemovePost = post => createAction(STORE_REMOVE_POST)({post});
 export const storeUpdatePosts = data => createAction(STORE_UPDATE_POSTS)(data);
-export const storeSortPost = data => createAction(STORE_SORT_POST)(data);

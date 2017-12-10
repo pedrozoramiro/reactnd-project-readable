@@ -21,7 +21,6 @@ import {
     requestAllPosts,
     requestAllPostsByCategory,
     requestRemovePost,
-    storeSortPost,
     requestVoteScore,
     requestCreatePost,
     requestUpdatePost
@@ -68,8 +67,9 @@ class PostList extends Component {
     }
 
     render() {
-        const { openPostEditDialog, postEditIndex } = this.state;
+        const { openPostEditDialog, postEditIndex ,sortProperty } = this.state;
         const { posts, removePost, updateVoteScore, updatePost } = this.props;
+        const postsSorted = posts.sort((a, b) => b[sortProperty] - a[sortProperty]);
         const postEdit = posts[postEditIndex];
         return (
             <div>
@@ -97,7 +97,7 @@ class PostList extends Component {
                 <GridList
                     cellHeight={180}
                 >
-                    {posts.map((post, index) => (
+                    {postsSorted.map((post, index) => (
                         <PostItem key={index}
                             postIndex={index}
                             post={post}
@@ -125,7 +125,6 @@ function mapDispatchToProps(dispatch) {
         getAllPosts: () => dispatch(requestAllPosts()),
         getAllByCategory: (category) => dispatch(requestAllPostsByCategory({ category })),
         removePost: (post) => dispatch(requestRemovePost({post})),
-        sortPosts: (sortProperty) => dispatch(storeSortPost({ sortProperty })),
         updateVoteScore: (post, postIndex, voteScoreCmd) => dispatch(requestVoteScore({ post, postIndex, voteScoreCmd })),
     }
 }

@@ -35,6 +35,11 @@ class PostEditDialog extends Component {
             <Dialog title="Novo post" modal={false} open={open}>
                 <form onSubmit={handleSubmit}>
                     <Field
+                        name="title"
+                        label="Título"
+                        component={renderTextField}
+                    />
+                    <Field
                         name="author"
                         label="Autor"
                         component={renderTextField}
@@ -53,11 +58,6 @@ class PostEditDialog extends Component {
                             />
                         ))}
                     </Field>
-                    <Field
-                        name="title"
-                        label="Título"
-                        component={renderTextField}
-                    />
                     <Field
                         name="body"
                         label="Texto"
