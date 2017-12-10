@@ -1,79 +1,33 @@
-import UUIDV1 from 'uuid/v1'
+import { createAction } from 'redux-actions';
 
-import {getData,postData,deleteData,putData} from '../commons/api'
-export const ADD_POST = 'ADD_POST'
-export const REMOVE_POST = 'REMOVE_POST'
-export const REFRESH_POSTS = 'REFRESH_POSTS'
-export const SORT_POST = 'SORT_POST'
-export const REFRESH_POST = 'REFRESH_POST'
+export const STORE_ADD_POST = 'STORE_ADD_POST'
+export const STORE_REMOVE_POST = 'STORE_REMOVE_POST'
+export const STORE_UPDATE_POSTS = 'STORE_UPDATE_POSTS'
+export const STORE_SORT_POST = 'STORE_SORT_POST'
+export const STORE_UPDATE_POST = 'STORE_UPDATE_POST'
+
+export const REQUEST_ALL_POST = 'REQUEST_ALL_POST'
+export const REQUEST_ALL_POST_BY_CATEGORY = 'REQUEST_ALL_POST_BY_CATEGORY'
+export const REQUEST_POST = 'REQUEST_POST'
+export const REQUEST_SAVE_POST = 'REQUEST_SAVE_POST'
+export const REQUEST_VOTESCORE_POST = 'REQUEST_VOTESCORE_POST'
+export const REQUEST_REMOVE_POST = 'REQUEST_REMOVE_POST'
+export const REQUEST_UPDATE_POST = 'REQUEST_UPDATE_POST'
+export const REQUEST_CREATE_POST = 'REQUEST_CREATE_POST'
 
 
-export function sortPosts(sortProperty){
-  return {
-    type: SORT_POST,
-    sortProperty
-  }
+export const requestAllPosts = data => createAction(REQUEST_ALL_POST)(data);
+export const requestAllPostsByCategory = data => createAction(REQUEST_ALL_POST_BY_CATEGORY)(data);
+export const requestPost = data => createAction(REQUEST_POST)(data);
+export const requestCreatePost = data => createAction(REQUEST_CREATE_POST)(data);
+export const requestVoteScore = data => createAction(REQUEST_VOTESCORE_POST)(data);
+export const requestRemovePost = data => createAction(REQUEST_REMOVE_POST)(data);
+export const requestUpdatePost = data => createAction(REQUEST_UPDATE_POST)(data);
+
+export const storeUpdatePost = function (postIndex) {
+    return data => createAction(STORE_UPDATE_POST)({postIndex,post:data});
 }
 
-export function addPost ( post) {
-  return {
-    type: ADD_POST,
-    post
-  }
-}
-
-export function deletePost(post) {
-  return {
-    type: REMOVE_POST,
-    post
-  }
-}
-
-export function refreshPosts(data) {
-  const posts = Array.isArray(data) ? data: [data];
-  return {
-    type: REFRESH_POSTS,
-    posts
-  }
-}
-
-function refreshPostUpdate(postIndex) {
-  
-  return function (post) {
-    
-    return {
-      type: REFRESH_POST,
-      postIndex,
-      post
-    }
-  }
-}
-
-export function updateVoteScore(post,postIndex,voteScoreCmd){  
-  return postData(`/posts/${post.id}`,{option:voteScoreCmd}, refreshPostUpdate(postIndex));
-}
-
-export function savePost(post,postIndex){ 
-  if(post.id){
-    return putData(`/posts/${post.id}`,post, refreshPostUpdate(postIndex));
-  }  
-  post.id = UUIDV1();
-  post.timestamp = Date.now();
-  return postData(`/posts`,post, addPost);
-}
-
-export function getPost(postId){
-  return getData(`/posts/${postId}`,refreshPosts);
-}
-
-export function fetchAllPosts (){
-  return getData("/posts",refreshPosts);
-}
-
-export function fetchAllByCategory (category){
-  return getData(`/${category}/posts`,refreshPosts);
-}
-
-export function removePost (post){
-  return deleteData(`/posts/${post.id}`,deletePost);
-}
+export const storeRemovePost = post => createAction(STORE_REMOVE_POST)({post});
+export const storeUpdatePosts = data => createAction(STORE_UPDATE_POSTS)(data);
+export const storeSortPost = data => createAction(STORE_SORT_POST)(data);

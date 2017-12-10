@@ -1,20 +1,18 @@
 
-
-
-export function postData(url,data,action){
-    return fetchBase(url,action,'POST',data);
+export function postData(url,data){
+    return fetchBase(url,'POST',data);
 }
 
-export function deleteData(url,action){
-    return fetchBase(url,action,'DELETE');
+export function deleteData(url){
+    return fetchBase(url,'DELETE');
 }
 
-export function getData(url, action) {
-    return fetchBase(url,action,'GET');
+export function getData(url) {
+    return fetchBase(url,'GET');
 }
 
-export function putData(url,data, action) {
-    return fetchBase(url,action,'PUT',data);
+export function putData(url,data) {
+    return fetchBase(url,'PUT',data);
 }
 
 function buildUrl(path){
@@ -26,17 +24,10 @@ function buildHeader(){
     'Content-Type': 'application/json'
     };
 }
-function fetchBase(url,action,method, data){
-    
-    return (dispatch) => {
-        fetch(buildUrl(url),
+function fetchBase(url,method, data){
+    return  fetch(buildUrl(url),
         {   headers:buildHeader(),
             method: method,
             body: data ? JSON.stringify(data) : null
-        })
-        .then((res) => res.json())
-        .then(data=>{
-            dispatch(action(data))
-        })
-    };
+        }).then((res) => res.json());
 }

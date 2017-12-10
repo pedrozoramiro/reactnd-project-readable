@@ -9,14 +9,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
-import { fetchAllCategories } from '../category/categoryAction'
+import { requestAllCategories } from '../category/categoryActions'
 import MenuItem from 'material-ui/MenuItem';
 import { renderTextField, renderSelectField } from '../../commons/reduxFormComponents'
 
 class PostEditDialog extends Component {
 
     componentDidMount = () => {
-        this.props.fetchAllCategories();
+        this.props.getAllCategories();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -95,7 +95,7 @@ class PostEditDialog extends Component {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        fetchAllCategories: (data) => dispatch(fetchAllCategories(data))
+        getAllCategories: (data) => dispatch(requestAllCategories(data))
     }
 }
 

@@ -1,8 +1,8 @@
 import {
-  LOAD_COMMENTS,
-  UPDATE_COMMENT,
-  ADD_COMMENT,
-  REMOVE_COMMENT
+  STORE_ADD_COMMENTS,
+  STORE_UPDATE_COMMENT,
+  STORE_ADD_COMMENT,
+  STORE_REMOVE_COMMENT
 } from './commentAction'
 
 const initialState = {
@@ -13,27 +13,27 @@ export function commentReducer(state = initialState, action) {
  
   switch (action.type) {
     
-    case LOAD_COMMENTS:{
-      const {comments} = action;
+    case STORE_ADD_COMMENTS:{
+      const comments = action.payload;
       return {...state, comments}
     }
 
-    case ADD_COMMENT:{
-      const {comment} = action;
+    case STORE_ADD_COMMENT:{
+      const comment = action.payload;
       return {...state, comments:state.comments.concat([comment])}
     }
     
-    case UPDATE_COMMENT:{
+    case STORE_UPDATE_COMMENT:{
       const {comments} = state;
-      const {commentIndex,comment} = action;
-      const newComments = comments.map((oldComment, index)=> commentIndex == index ? comment:oldComment);
+      const {comment} = action.payload;
+      const newComments = comments.map((oldComment)=> comment.id == oldComment.id ? comment:oldComment);
       return {...state, comments :newComments }
     }
     
-    case REMOVE_COMMENT:{
+    case STORE_REMOVE_COMMENT:{
       const {comments} = state;
-      const {commentIndex} = action;
-      return {...state, comments:comments.filter((comment,index) => index !== commentIndex)}
+      const {comment} = action.payload;
+      return {...state, comments:comments.filter((c) => c.id !== comment.id)}
     }
     
     default:

@@ -1,6 +1,4 @@
-import {
-  REFRESH_CATEGORY
-} from './categoryAction'
+import { STORE_ADD_CATEGORIES } from './categoryActions';
 
 const initialState = {
   categories:[]
@@ -8,8 +6,9 @@ const initialState = {
 
 export function categories(state = initialState, action) {
   switch (action.type) {
-     case REFRESH_CATEGORY:{
-      const {categories} = action;
+     case STORE_ADD_CATEGORIES:{
+      const {categories} = action.payload;
+      
       return {...state, categories}
     }
 

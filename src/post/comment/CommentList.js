@@ -8,7 +8,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 
 
 import CommentDetails from './CommentDetails'
-import { getAllComments, updateVoteScore, saveComment, deleteComment, updateBodyComment } from './commentAction'
+import { requestAllComments, requestUpdateComment, requestCreateComment, requestRemoveComment, requestVoteScoreComment } from './commentAction'
 
 class CommentList extends Component {
 
@@ -17,7 +17,7 @@ class CommentList extends Component {
     componentDidMount = () => {
         const { postId } = this.props;
         if (postId) {
-            this.props.getAllComments(postId);
+            this.props.getAllComments({id:postId});
         }
     };
 
@@ -38,7 +38,7 @@ class CommentList extends Component {
         return (
             <div>
                 <Row>
-                    <Col xs >
+                    <Col xs={true} >
                         <TextField
                             hintText="Novo Comentário"
                             name="newCommentBody"
@@ -69,11 +69,15 @@ class CommentList extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllComments: (data) => dispatch(getAllComments(data)),
-        updateVoteScore: (comments, commentIndex, voteScoreCmd) => dispatch(updateVoteScore(comments, commentIndex, voteScoreCmd)),
-        saveComment: (body, postId) => dispatch(saveComment(body, postId)),
-        deleteComment: (body, postId) => dispatch(deleteComment(body, postId)),
-        updateBodyComment: (body, commentId, commentIndex) => dispatch(updateBodyComment(body, commentId, commentIndex)),
+        getAllComments: (post) => dispatch(requestAllComments({post})),
+        updateVoteScore: (comment, commentIndex, voteScoreCmd) => 
+                            dispatch(requestVoteScoreComment({comment, commentIndex, voteScoreCmd})),
+        saveComment: (body, parentId) => 
+                            dispatch(requestCreateComment({body,parentId})),
+        deleteComment: (comment) => 
+                            dispatch(requestRemoveComment({comment})),
+        updateBodyComment: (body, id, commentIndex) => 
+                            dispatch(requestUpdateComment({comment:{body, id}, commentIndex})),
 
     }
 }

@@ -1,14 +1,15 @@
 import React, { Component }  from 'react';
 
 import { connect } from 'react-redux'
-import {fetchAllCategories} from './categoryAction'
+import {requestAllCategories} from './categoryActions'
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 
 class CategoryList extends Component {
 
     componentDidMount =() =>{
-        this.props.fetchAllCategories();
+        this.props.getAllCategories();
+        
     }
 
     
@@ -41,7 +42,7 @@ class CategoryList extends Component {
 
 function mapDispatchToProps (dispatch) {
     return {
-        fetchAllCategories: (data) => dispatch(fetchAllCategories(data))
+        getAllCategories: () => dispatch(requestAllCategories())
     }
   }
 

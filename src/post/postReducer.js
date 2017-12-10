@@ -1,65 +1,58 @@
 import {
-  ADD_POST,
-  REMOVE_POST,
-  REFRESH_POSTS,
-  SORT_POST,
-  REFRESH_POST
+  STORE_ADD_POST,
+  STORE_REMOVE_POST,
+  STORE_UPDATE_POST,
+  STORE_UPDATE_POSTS,
+  STORE_SORT_POST
 } from './postAction'
 
 const initialState = {
-  posts:[],
-  postDetailId:''
+  posts: [],
+  postDetailId: ''
 }
 
-export function posts(state = initialState, action) {
- 
+export function posts(state = initialState, action) {  
+  
   switch (action.type) {
-    
-    case ADD_POST:{
-      const {post} = action;
-      const {posts} = state;
-      return {...state, posts:posts.concat([post])}
+    case STORE_ADD_POST: {
+      
+
+      const post = action.payload;
+      const { posts } = state;
+      return { ...state, posts: posts.concat([post]) }
     }
 
-    case REMOVE_POST:{
-      const {posts} = state;
-      return {...state, posts:posts.filter(p => p.id !== action.post.id)}
+    case STORE_REMOVE_POST: {
+      const  {post}  = action.payload;
+      const { posts } = state;
+      return { ...state, posts: posts.filter(p => p.id !== post.id) }
     }
 
-    case REFRESH_POSTS:{
-      const {posts} = action;
-      return {...state, posts:posts}
+    case STORE_UPDATE_POSTS: {
+      const  posts  = action.payload;
+      return { ...state, posts }
     }
 
-    case SORT_POST:{
-      const {posts} = state;
-      const {sortProperty} = action;
-      return {...state, posts: posts.sort((a, b) => b[sortProperty] - a[sortProperty])}
+    case STORE_SORT_POST: {
+      const { posts } = state;
+      const { sortProperty } = action.payload;
+      return { ...state, posts: posts.sort((a, b) => b[sortProperty] - a[sortProperty]) }
     }
 
-    case REFRESH_POST:{
-      const {posts} = state;
-      const {postIndex,post} = action;
-      return {...state,
-              posts :[...posts.slice(0, postIndex),
-                      post,
-                      ...posts.slice(postIndex + 1)
-                     ]
-             }
+    case STORE_UPDATE_POST: {
+      const { posts } = state;
+      const { postIndex, post } = action.payload;
+      return {
+        ...state,
+        posts: [...posts.slice(0, postIndex),
+          post,
+        ...posts.slice(postIndex + 1)
+        ]
+      }
     }
 
     default:
       return state;
   }
-      
+
 }
-
-
-/*id	     String	Identificador único
-timestamp	 Integer	Data de criação - dados default rastreiam isto em Unix time. Você pode usar Date.now() para obter este número
-title	     String	Título do post
-body	     String	Corpo do post
-author	   String	Autor do post
-category	 String	Deve ser uma das categorias fornecidas pelo servidor
-voteScore	 Integer	Votos líquidos que a postagem recebeu (default: 1)
-deleted	   Boolean	Marcado se o post foi 'deletado' (sem acesso no front end), (default: false) */

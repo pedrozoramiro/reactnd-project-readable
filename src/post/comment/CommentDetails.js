@@ -54,7 +54,7 @@ class CommentDetails extends Component {
                         <RaisedButton icon={<ActionThumbUp />} onClick={() => updateVoteScore(comment, commentIndex, 'upVote')} />
                         <RaisedButton icon={<ActionThumbDown />} onClick={() => updateVoteScore(comment, commentIndex, 'downVote')} />
                         <RaisedButton icon={<ActionEdit />} onClick={() => this.handleEnabledEdit(true)} />
-                        <RaisedButton icon={<ActionDelete />} onClick={() => deleteComment(commentIndex, comment.id)} />
+                        <RaisedButton icon={<ActionDelete />} onClick={() => deleteComment(comment)} />
                     </If>
                     <If test={enabledEdit} >
                         <RaisedButton icon={<ActionDone />} onClick={this.handleDoneEdit} />

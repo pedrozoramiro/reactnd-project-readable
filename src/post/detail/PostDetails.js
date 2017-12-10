@@ -13,7 +13,7 @@ import CommentList from '../comment/CommentList'
 import If from '../../commons/If'
 
 import {
-    getPost,
+    requestPost,
 } from '../postAction'
 
 
@@ -60,7 +60,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getPost: (post_id) => dispatch(getPost(post_id))
+        getPost: (post_id) => dispatch(requestPost(post_id))
     }
 }
 

@@ -17,12 +17,14 @@ import PostItem from './detail/PostItem'
 import PostEditDialog from './detail/PostEditDialog'
 import CategoryList from './category/CategoryList'
 import {
-    fetchAllPosts,
-    removePost,
-    fetchAllByCategory,
-    sortPosts,
-    updateVoteScore,
-    savePost
+    requestSavePost,
+    requestAllPosts,
+    requestAllPostsByCategory,
+    requestRemovePost,
+    storeSortPost,
+    requestVoteScore,
+    requestCreatePost,
+    requestUpdatePost
 } from './postAction'
 import { RaisedButton } from 'material-ui';
 
@@ -41,13 +43,13 @@ class PostList extends Component {
     }
 
     loadPosts = (category) => {
-        const { history, fetchAllPosts, fetchAllByCategory } = this.props;
+        const { history, getAllPosts, getAllByCategory } = this.props;
         if (category) {
-            fetchAllByCategory(category);
+            getAllByCategory(category);
             history.push(`/${category}`)
             return;
         }
-        fetchAllPosts();
+        getAllPosts();
         history.push('/');
     }
 
@@ -57,7 +59,11 @@ class PostList extends Component {
 
     handleSubmit = (post) => {
         const { postEditIndex } = this.state;
-        this.props.savePost(post, postEditIndex);
+        if(post.id){
+            this.props.updatePost(post, postEditIndex);
+        }else{
+            this.props.createPost(post);
+        }
         this.setState({ openPostEditDialog: false });
     }
 
@@ -114,13 +120,13 @@ class PostList extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        savePost: (data, postIndex) => dispatch(savePost(data, postIndex)),
-        fetchAllPosts: (data) => dispatch(fetchAllPosts(data)),
-        fetchAllByCategory: (data) => dispatch(fetchAllByCategory(data)),
-        removePost: (data) => dispatch(removePost(data)),
-        sortPosts: (sortProperty) => dispatch(sortPosts(sortProperty)),
-        updateVoteScore: (post, postIndex, voteScoreCmd) => dispatch(updateVoteScore(post, postIndex, voteScoreCmd)),
-
+        createPost: (post, postIndex) => dispatch(requestCreatePost({ post })),
+        updatePost: (post, postIndex) => dispatch(requestUpdatePost({ post, postIndex })),
+        getAllPosts: () => dispatch(requestAllPosts()),
+        getAllByCategory: (category) => dispatch(requestAllPostsByCategory({ category })),
+        removePost: (post) => dispatch(requestRemovePost({post})),
+        sortPosts: (sortProperty) => dispatch(storeSortPost({ sortProperty })),
+        updateVoteScore: (post, postIndex, voteScoreCmd) => dispatch(requestVoteScore({ post, postIndex, voteScoreCmd })),
     }
 }
 
