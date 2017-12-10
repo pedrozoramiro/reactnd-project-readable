@@ -21,12 +21,11 @@ class PostEditDialog extends Component {
 
     componentWillReceiveProps(nextProps) {
         const { postEdit, initialize } = nextProps
-
-        if (!postEdit) return;
-
-        if (!this.props.postEdit || this.props.postEdit.id !== postEdit.id) {
+        if (postEdit && (!this.props.postEdit || this.props.postEdit.id !== postEdit.id)){
             initialize(postEdit);
+            return;
         }
+        initialize({});
     }
 
     render() {
