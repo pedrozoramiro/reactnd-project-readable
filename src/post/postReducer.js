@@ -3,7 +3,8 @@ import {
   STORE_REMOVE_POST,
   STORE_UPDATE_POST,
   STORE_UPDATE_POSTS,
-  STORE_SORT_POST
+  STORE_SORT_POST,
+  STORE_PUSH_POST
 } from './postAction'
 
 const initialState = {
@@ -30,19 +31,21 @@ export function posts(state = initialState, action) {
       const posts = action.payload;
       return { ...state, posts }
     }
-
+    case STORE_PUSH_POST: {
+      const { posts } = state;
+      const { post } = action.payload;
+      return {
+        ...state,
+        posts: [
+          ...posts.slice(0, 0),
+          post,
+          ...posts.slice(0)
+        ]
+      }
+    }
     case STORE_UPDATE_POST: {
       const { posts } = state;
       const { postIndex, post } = action.payload;
-      if (!postIndex) {
-        return {
-          ...state,
-          posts: [...posts.slice(0, 0),
-            post,
-          ...posts.slice(0)
-          ]
-        }
-      }
       return {
         ...state,
         posts: [...posts.slice(0, postIndex),

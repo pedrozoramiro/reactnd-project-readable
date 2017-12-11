@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import {reset,initialize} from 'redux-form';
+import { reset, initialize } from 'redux-form';
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -27,16 +27,23 @@ import {
     requestUpdatePost
 } from './postAction'
 import { RaisedButton } from 'material-ui';
+import { requestAllCategories } from './category/categoryActions';
 
 class PostList extends Component {
 
     state = { openPostEditDialog: false, postEditIndex: null, sortProperty: 'voteScore' }
 
-    componentDidMount = () => {
-        const { match } = this.props;
-        this.loadPosts(match.params.category);
-        debugger;
-    };
+    componentWillMount() {
+        console.log('teste');
+        this.props.getAllCategories();
+        this.loadPosts(this.props.match.params.category);
+        this.unlisten = this.props.history.listen((location, action) => {
+            this.loadPosts(location.state);
+        });
+    }
+    componentWillUnmount() {
+        this.unlisten();
+    }
 
     handleSort = (event, index, sortProperty) => {
         this.setState({ sortProperty });
@@ -46,35 +53,33 @@ class PostList extends Component {
         const { history, getAllPosts, getAllByCategory } = this.props;
         if (category) {
             getAllByCategory(category);
-            history.push(`/${category}`)
             return;
         }
         getAllPosts();
-        history.push('/');
     }
 
     handleOpenModal = (openPostEditDialog, postEditIndex) => {
-        const {posts,initializePostEditForm} = this.props;
+        const { posts, initializePostEditForm } = this.props;
         this.setState({ openPostEditDialog, postEditIndex });
-        if(openPostEditDialog){
-            const post = postEditIndex ? posts[postEditIndex]:{};
+        if (openPostEditDialog) {
+            const post = postEditIndex ? posts[postEditIndex] : {};
             this.props.initializePostEditForm(post);
         }
     }
 
     handleSubmit = (post) => {
         const { postEditIndex } = this.state;
-        if(post.id){
+        if (post.id) {
             this.props.updatePost(post, postEditIndex);
-        }else{
+        } else {
             this.props.createPost(post);
         }
         this.setState({ openPostEditDialog: false });
     }
 
     render() {
-        const { openPostEditDialog, postEditIndex ,sortProperty } = this.state;
-        const { posts, removePost, updateVoteScore, updatePost } = this.props;
+        const { openPostEditDialog, postEditIndex, sortProperty } = this.state;
+        const { posts, removePost, updateVoteScore, updatePost, history, categories } = this.props;
         const postsSorted = posts.sort((a, b) => b[sortProperty] - a[sortProperty]);
         const postEdit = posts[postEditIndex];
         return (
@@ -85,7 +90,7 @@ class PostList extends Component {
                 />
                 <Toolbar>
                     <ToolbarGroup firstChild={true}>
-                        <CategoryList handleToCategory={this.loadPosts} />
+                        <CategoryList categories={categories} history={history} />
                     </ToolbarGroup>
                     <ToolbarGroup>
                         <SelectField
@@ -114,6 +119,7 @@ class PostList extends Component {
                     )}
                 </GridList>
                 <PostEditDialog
+                    categories={categories}
                     open={openPostEditDialog}
                     handleCloseModal={() => this.handleOpenModal(false)}
                     onSubmit={this.handleSubmit}
@@ -126,19 +132,20 @@ class PostList extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
+        getAllCategories: (data) => dispatch(requestAllCategories(data)),
         initializePostEditForm: (post) => dispatch(initialize('PostEditForm', post)),
         createPost: (post, postIndex) => dispatch(requestCreatePost({ post })),
         updatePost: (post, postIndex) => dispatch(requestUpdatePost({ post, postIndex })),
         getAllPosts: () => dispatch(requestAllPosts()),
         getAllByCategory: (category) => dispatch(requestAllPostsByCategory({ category })),
-        removePost: (post) => dispatch(requestRemovePost({post})),
+        removePost: (post) => dispatch(requestRemovePost({ post })),
         updateVoteScore: (post, postIndex, voteScoreCmd) => dispatch(requestVoteScore({ post, postIndex, voteScoreCmd })),
     }
 }
 
-function mapStateToProps(state) {
-    const { posts } = state;
-    return { ...posts };
+function mapStateToProps(state,sp) {
+    const { posts, categories } = state;
+    return { ...posts, ...categories };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList)

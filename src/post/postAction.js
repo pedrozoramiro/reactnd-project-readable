@@ -4,6 +4,7 @@ export const STORE_ADD_POST = 'STORE_ADD_POST'
 export const STORE_REMOVE_POST = 'STORE_REMOVE_POST'
 export const STORE_UPDATE_POSTS = 'STORE_UPDATE_POSTS'
 export const STORE_UPDATE_POST = 'STORE_UPDATE_POST'
+export const STORE_PUSH_POST = 'STORE_PUSH_POST'
 
 export const REQUEST_ALL_POST = 'REQUEST_ALL_POST'
 export const REQUEST_ALL_POST_BY_CATEGORY = 'REQUEST_ALL_POST_BY_CATEGORY'
@@ -28,4 +29,5 @@ export const storeUpdatePost = function (postIndex) {
 }
 
 export const storeRemovePost = post => createAction(STORE_REMOVE_POST)({post});
+export const storePushPost = post => createAction(STORE_PUSH_POST)({post});
 export const storeUpdatePosts = data => createAction(STORE_UPDATE_POSTS)(data);

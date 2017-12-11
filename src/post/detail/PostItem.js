@@ -23,7 +23,7 @@ class PostItem extends Component {
           <Card>
             <CardHeader
               title={post.title}
-              subtitle={`Score: ${post.voteScore}  Commentários: ${post.commentCount}  Autor: ${post.author} `}
+              subtitle={`category: ${post.category}  Score: ${post.voteScore}  Commentários: ${post.commentCount}  Autor: ${post.author} `}
             />
             <CardActions>
               <RaisedButton icon={<ActionThumbUp  />}  onClick={()=>handleUpdateVoteScore(post,postIndex,'upVote')} />

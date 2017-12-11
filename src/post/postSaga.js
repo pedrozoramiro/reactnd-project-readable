@@ -19,7 +19,8 @@ import {
   REQUEST_ALL_POST_BY_CATEGORY,
   REQUEST_UPDATE_POST,
   REQUEST_CREATE_POST,
-  storeRemovePost
+  storeRemovePost,
+  storePushPost
 
 
 } from './postAction';
@@ -31,12 +32,12 @@ function * getAllPosts(action) {
 
 function * getPost(action) {   
   const postId = action.payload;
-  yield * apiSaga(postService.getPost(postId),storeUpdatePost(),null);
+  yield * apiSaga(postService.getPost(postId),storePushPost,null);
 }
 
 function * createPost(action) { 
   const {post} = action.payload;
-  yield * apiSaga(postService.createPost(post),storeUpdatePost(),null);
+  yield * apiSaga(postService.createPost(post),storePushPost,null);
 }
 
 function * updatePost(action) { 

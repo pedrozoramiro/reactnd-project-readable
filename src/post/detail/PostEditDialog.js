@@ -15,10 +15,6 @@ import { renderTextField, renderSelectField } from '../../commons/reduxFormCompo
 
 class PostEditDialog extends Component {
 
-    componentDidMount = () => {
-        this.props.getAllCategories();
-    }
-
     componentWillReceiveProps(nextProps) {
         const { postEdit, initialize } = nextProps
         if (postEdit && (!this.props.postEdit || this.props.postEdit.id !== postEdit.id)){
@@ -91,11 +87,7 @@ class PostEditDialog extends Component {
     }
 
 }
-function mapDispatchToProps(dispatch) {
-    return {
-        getAllCategories: (data) => dispatch(requestAllCategories(data))
-    }
-}
+
 
 function mapStateToProps(state) {
     const { categories } = state;
@@ -103,6 +95,6 @@ function mapStateToProps(state) {
 }
 
 PostEditDialog = reduxForm({ form: 'PostEditForm' })(PostEditDialog)
-PostEditDialog = connect(mapStateToProps, mapDispatchToProps)(PostEditDialog)
+PostEditDialog = connect(mapStateToProps, null)(PostEditDialog)
 export default PostEditDialog
 
