@@ -62,7 +62,7 @@ class PostEditDialog extends Component {
                     <div>
 
                         <Row>
-                            <Col xs >
+                            <Col  xs={true} >
                                 <RaisedButton
                                     label="Salvar"
                                     primary
@@ -71,7 +71,7 @@ class PostEditDialog extends Component {
                                     type="submit"
                                 />
                             </Col>
-                            <Col xs >
+                            <Col  xs={true} >
                                 <RaisedButton
                                     color="primary"
                                     onClick={handleCloseModal}

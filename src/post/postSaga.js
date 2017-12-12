@@ -1,26 +1,21 @@
 
-import {put, takeEvery} from 'redux-saga/effects';
+import {takeEvery} from 'redux-saga/effects';
 import postService from './postService'
 import apiSaga from '../commons/saga/apiSaga'
+  
 import { 
-  requestAllPosts,
   storeUpdatePosts,
-  requestPost,
-  requestSavePost,
   storeUpdatePost,
-  requestVoteScore,
-  requestAllPostsByCategory,
-  requestRemovePost,
   REQUEST_VOTESCORE_POST,
   REQUEST_REMOVE_POST,
-  REQUEST_SAVE_POST,
   REQUEST_POST,
   REQUEST_ALL_POST,
   REQUEST_ALL_POST_BY_CATEGORY,
   REQUEST_UPDATE_POST,
   REQUEST_CREATE_POST,
   storeRemovePost,
-  storePushPost
+  storePushPost,
+  storeErrorPost
 
 
 } from './postAction';
@@ -32,7 +27,7 @@ function * getAllPosts(action) {
 
 function * getPost(action) {   
   const postId = action.payload;
-  yield * apiSaga(postService.getPost(postId),storePushPost,null);
+  yield * apiSaga(postService.getPost(postId),storePushPost,storeErrorPost);
 }
 
 function * createPost(action) { 

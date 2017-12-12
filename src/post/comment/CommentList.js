@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import ActionDone from 'material-ui/svg-icons/action/done';
 import TextField from 'material-ui/TextField';
 import FlatButton from "material-ui/FlatButton";
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 
 
 import CommentDetails from './CommentDetails'

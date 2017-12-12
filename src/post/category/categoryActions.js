@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+import { createAction } from 'redux-actions';
 
 export const REQUEST_ALL_CATEGORY = 'REQUEST_ALL_CATEGORY'
 export const STORE_ADD_CATEGORIES = 'STORE_ADD_CATEGORIES'

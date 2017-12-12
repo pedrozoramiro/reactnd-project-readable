@@ -27,15 +27,12 @@ import {
     requestUpdatePost
 } from './postAction'
 import { RaisedButton } from 'material-ui';
-import { requestAllCategories } from './category/categoryActions';
 
 class PostList extends Component {
 
     state = { openPostEditDialog: false, postEditIndex: null, sortProperty: 'voteScore' }
 
     componentWillMount() {
-        console.log('teste');
-        this.props.getAllCategories();
         this.loadPosts(this.props.match.params.category);
         this.unlisten = this.props.history.listen((location, action) => {
             this.loadPosts(location.state);
@@ -112,6 +109,7 @@ class PostList extends Component {
                         <PostItem key={index}
                             postIndex={index}
                             post={post}
+                            categories={categories}
                             handleUpdateVoteScore={updateVoteScore}
                             handleRemove={removePost}
                             handleUpdatePost={() => this.handleOpenModal(true, index)}
@@ -119,7 +117,6 @@ class PostList extends Component {
                     )}
                 </GridList>
                 <PostEditDialog
-                    categories={categories}
                     open={openPostEditDialog}
                     handleCloseModal={() => this.handleOpenModal(false)}
                     onSubmit={this.handleSubmit}
@@ -132,7 +129,6 @@ class PostList extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllCategories: (data) => dispatch(requestAllCategories(data)),
         initializePostEditForm: (post) => dispatch(initialize('PostEditForm', post)),
         createPost: (post, postIndex) => dispatch(requestCreatePost({ post })),
         updatePost: (post, postIndex) => dispatch(requestUpdatePost({ post, postIndex })),

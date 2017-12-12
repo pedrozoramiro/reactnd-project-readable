@@ -4,11 +4,13 @@ import {
   STORE_UPDATE_POST,
   STORE_UPDATE_POSTS,
   STORE_SORT_POST,
-  STORE_PUSH_POST
+  STORE_PUSH_POST,
+  REQUEST_FAILED_POST
 } from './postAction'
 
 const initialState = {
   posts: [],
+  error:null,
   postDetailId: ''
 }
 
@@ -46,6 +48,7 @@ export function posts(state = initialState, action) {
     case STORE_UPDATE_POST: {
       const { posts } = state;
       const { postIndex, post } = action.payload;
+      debugger;
       return {
         ...state,
         posts: [...posts.slice(0, postIndex),
@@ -53,6 +56,13 @@ export function posts(state = initialState, action) {
         ...posts.slice(postIndex + 1)
         ]
       }
+    }
+
+    case REQUEST_FAILED_POST: {
+      const { posts } = state;
+      const { error } = action.payload;
+      
+      return {...state,error}
     }
 
     default:

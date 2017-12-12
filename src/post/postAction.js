@@ -14,6 +14,8 @@ export const REQUEST_VOTESCORE_POST = 'REQUEST_VOTESCORE_POST'
 export const REQUEST_REMOVE_POST = 'REQUEST_REMOVE_POST'
 export const REQUEST_UPDATE_POST = 'REQUEST_UPDATE_POST'
 export const REQUEST_CREATE_POST = 'REQUEST_CREATE_POST'
+export const REQUEST_FAILED_POST = 'REQUEST_FAILED_POST'
+
 
 
 export const requestAllPosts = data => createAction(REQUEST_ALL_POST)(data);
@@ -31,3 +33,4 @@ export const storeUpdatePost = function (postIndex) {
 export const storeRemovePost = post => createAction(STORE_REMOVE_POST)({post});
 export const storePushPost = post => createAction(STORE_PUSH_POST)({post});
 export const storeUpdatePosts = data => createAction(STORE_UPDATE_POSTS)(data);
+export const storeErrorPost =error => createAction(REQUEST_FAILED_POST)({error});

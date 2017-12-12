@@ -9,8 +9,8 @@ import ActionDone from 'material-ui/svg-icons/action/done';
 import ActionCancel from 'material-ui/svg-icons/content/clear';
 import TextField from 'material-ui/TextField';
 
-import { Grid, Row, Col } from 'react-flexbox-grid';
-import { Card, CardActions, CardHeader, CardText, CardTitle } from 'material-ui/Card';
+import {  Row } from 'react-flexbox-grid';
+import { Card, CardActions,CardText } from 'material-ui/Card';
 
 class CommentDetails extends Component {
 

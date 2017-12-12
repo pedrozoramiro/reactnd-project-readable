@@ -1,4 +1,4 @@
-import { getData, postData, deleteData, putData } from '../../commons/api'
+import { getData } from '../../commons/api'
 
 export default {
   getAllCategories: () => function () {

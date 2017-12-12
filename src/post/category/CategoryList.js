@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 import { connect } from 'react-redux'
 import { requestAllCategories } from './categoryActions'
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 class CategoryList extends Component {
   constructor(props) {
@@ -13,10 +16,10 @@ class CategoryList extends Component {
     };
   }
 
-  handleChange = (event, index, categorySelected) => {
+  handleChange = (categorySelected) => {
     const { history } = this.props;
     this.setState({ categorySelected });
-    history.push(`/${categorySelected}`,categorySelected);
+    history.push(`/${categorySelected}`, categorySelected);
   }
 
 
@@ -24,12 +27,13 @@ class CategoryList extends Component {
     const { categories } = this.props;
     const { categorySelected } = this.state;
     return (
-      <DropDownMenu value={categorySelected} onChange={this.handleChange}>
-        <MenuItem value={""} primaryText="Todas as categorias" />
+      <div>
+        <RaisedButton label="Todas as categorias" primary onClick={() => this.handleChange("")} />
         {categories.map((category, key) => (
-          <MenuItem key={key} value={category.path} primaryText={category.name} />)
+          <RaisedButton key={key} label={category.name} primary onClick={() => this.handleChange(`${category.path}`)} />
+        )
         )}
-      </DropDownMenu>
+      </div>
     );
   }
 }
