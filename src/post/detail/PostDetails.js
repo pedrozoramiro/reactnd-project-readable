@@ -30,7 +30,7 @@ class PostDetails extends Component {
     };
 
     render() {
-        const { post, error, removePost, updatePost, updateVoteScore, postIndex, categories} = this.props;
+        const { post, removePost, updatePost, updateVoteScore, postIndex, categories} = this.props;
 
         return (
             <div>
@@ -38,13 +38,13 @@ class PostDetails extends Component {
                     iconElementLeft={<IconButton containerElement={<Link to="/" />}><NavigationClose /></IconButton>}
                     title={<span>Detalhes do post </span>}
                 />
-                <If test={!post.id || error}>
+                <If test={!post.id}>
                     <p>Não foi possivel carregar o post!</p>
                 </If>
-                <If test={post.id || !error}>
+                <If test={post.id}>
                     <Card>
                         <CardTitle title={post.title}
-                            subtitle={`Score: ${post.voteScore}  
+                            subtitle={`Votos: ${post.voteScore}  
                               Commentários: ${post.commentCount}  
                               Autor: ${post.author}
                               Data: ${new Date(post.timestamp).toLocaleDateString()} `} />

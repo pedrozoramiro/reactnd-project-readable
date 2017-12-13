@@ -13,6 +13,7 @@ import {
   REQUEST_REMOVE_COMMENT,
   REQUEST_VOTESCORE_COMMENT
 } from './commentAction';
+import { storeIncrementCountCommentPost } from '../postAction';
 
 function* getAllComments(action) {
   const { post } = action.payload;
@@ -22,11 +23,13 @@ function* getAllComments(action) {
 function* createComment(action) {
   const  comment  = action.payload;
   yield* apiSaga(commentService.createComment(comment), storeAddComment, null);
+  yield put(storeIncrementCountCommentPost({postId:comment.parentId, value: 1}));  
 }
 
 function* removeComment(action) {
   const { comment } = action.payload;
   yield* apiSaga(commentService.deleteComment(comment), storeRemoveComment, null);
+  yield put(storeIncrementCountCommentPost({postId:comment.parentId, value: -1}));  
 }
 
 function* updateComment(action) {

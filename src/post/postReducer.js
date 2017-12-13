@@ -5,7 +5,8 @@ import {
   STORE_UPDATE_POSTS,
   STORE_SORT_POST,
   STORE_PUSH_POST,
-  REQUEST_FAILED_POST
+  REQUEST_FAILED_POST,
+  STORE_INCREMENT_COUNT_COMMENT_POST
 } from './postAction'
 
 const initialState = {
@@ -48,13 +49,25 @@ export function posts(state = initialState, action) {
     case STORE_UPDATE_POST: {
       const { posts } = state;
       const { postIndex, post } = action.payload;
-      debugger;
       return {
         ...state,
         posts: [...posts.slice(0, postIndex),
           post,
         ...posts.slice(postIndex + 1)
         ]
+      }
+    }
+
+    case STORE_INCREMENT_COUNT_COMMENT_POST: {
+      const { posts } = state;
+      const { value, postId } = action.payload;
+      var newPosts = posts.map(post =>(post.id === postId) ? 
+                                      Object.assign({}, post, {commentCount:post.commentCount+=value}):
+                                      post
+                                    );
+      return {
+        ...state,
+        posts:newPosts
       }
     }
 
